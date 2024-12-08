@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*.::before,*.::after {
+    box-sizing: border-box;
+    marign:0;
+    padding:0;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-weight: 300;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.full-screen {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#masthead {
+  position: fixed;
+  display: flex;
+  z-index: 9999;
+}
+
+#masthead a {
+  padding: 1rem 2rem;
+}
+
+#panels #panels-container {
+  height: 100vh;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0;
+  overflow: hidden;
+  background-color: #ddd;
+}
+
+#panels #panels-container .panel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#page {
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  
+  /* Stacking context for main content */
+  .site-content {
+    position: relative;
+    z-index: 0;
+  }
+  
+  /* Ensure header stays on top */
+  #masthead {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+  }
+  
+  /* Keep panels behind header */
+  #panels {
+    position: relative;
+    z-index: 0;
+  }
+  
+  /* Section heights */
+  #intro > div,
+  #home > div,
+  #contact > div {
+    min-height: 100vh;
+  }
+  
+  /* Panel sections */
+  .portfolio-section,
+  .about-section {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+  
+  /* Footer stacking */
+  #footer {
+    position: relative;
+    z-index: 100;
+  }
