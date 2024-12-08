@@ -4,6 +4,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Code, Database, Globe } from 'lucide-react';
 
+import CookieConsent from '../components/common/CookieConsent';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const HomePage: React.FC = () => {
@@ -113,6 +115,7 @@ const HomePage: React.FC = () => {
           <p className="text-mono-400">Scroll down to explore our portfolio</p>
         </div>
       </div>
+      <CookieConsent />
     </div>
   );
 };

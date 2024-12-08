@@ -1,4 +1,4 @@
-// Header.tsx
+// src/components/layout/Header.tsx
 import { useState, useEffect, useRef, FC } from 'react';
 import gsap from 'gsap';
 import { Menu, X, Github, Linkedin } from 'lucide-react';
@@ -22,6 +22,12 @@ const SocialLinks: FC = () => {
     const links = socialLinksRef.current?.querySelectorAll('.social-link');
     if (!links) return;
 
+    const handlers: Array<{
+      el: HTMLElement;
+      handleMouseEnter: () => void;
+      handleMouseLeave: () => void;
+    }> = [];
+
     links.forEach((link) => {
       const el = link as HTMLElement;
       const enterAnimation = gsap.to(el, {
@@ -30,9 +36,23 @@ const SocialLinks: FC = () => {
         paused: true,
       });
 
-      el.addEventListener('mouseenter', () => enterAnimation.play());
-      el.addEventListener('mouseleave', () => enterAnimation.reverse());
+      const handleMouseEnter = () => enterAnimation.play();
+      const handleMouseLeave = () => enterAnimation.reverse();
+
+      el.addEventListener('mouseenter', handleMouseEnter);
+      el.addEventListener('mouseleave', handleMouseLeave);
+
+      // Store handlers for cleanup
+      handlers.push({ el, handleMouseEnter, handleMouseLeave });
     });
+
+    // Cleanup event listeners
+    return () => {
+      handlers.forEach(({ el, handleMouseEnter, handleMouseLeave }) => {
+        el.removeEventListener('mouseenter', handleMouseEnter);
+        el.removeEventListener('mouseleave', handleMouseLeave);
+      });
+    };
   }, []);
 
   return (
@@ -61,13 +81,14 @@ const SocialLinks: FC = () => {
 
 const Header: FC<HeaderProps> = ({ className }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const menuItemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Animate header on mount
   useEffect(() => {
     gsap.from(headerRef.current, {
       opacity: 0,
@@ -77,6 +98,7 @@ const Header: FC<HeaderProps> = ({ className }) => {
     });
   }, []);
 
+  // Logo hover animation
   useEffect(() => {
     const logo = logoRef.current;
     if (!logo) return;
@@ -87,10 +109,19 @@ const Header: FC<HeaderProps> = ({ className }) => {
       paused: true,
     });
 
-    logo.addEventListener('mouseenter', () => hoverAnimation.play());
-    logo.addEventListener('mouseleave', () => hoverAnimation.reverse());
+    const handleMouseEnter = () => hoverAnimation.play();
+    const handleMouseLeave = () => hoverAnimation.reverse();
+
+    logo.addEventListener('mouseenter', handleMouseEnter);
+    logo.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      logo.removeEventListener('mouseenter', handleMouseEnter);
+      logo.removeEventListener('mouseleave', handleMouseLeave);
+    };
   }, []);
 
+  // Mobile menu animations
   useEffect(() => {
     if (!mobileMenuRef.current) return;
 
@@ -124,6 +155,7 @@ const Header: FC<HeaderProps> = ({ className }) => {
     }
   }, [isMobileMenuOpen]);
 
+  // Menu button click animation
   const handleMenuButtonClick = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -139,30 +171,30 @@ const Header: FC<HeaderProps> = ({ className }) => {
     <header
       id="masthead"
       ref={headerRef}
-      className="site-header fixed top-0 left-0 w-full z-50 opacity-0 transition-opacity duration-300 bg-black/80 backdrop-blur-md border-b border-white/20 shadow-lg"
+      className={`site-header fixed top-0 left-0 w-full z-50 opacity-0 transition-opacity duration-300 bg-black/80 backdrop-blur-md border-b border-white/20 shadow-lg ${className}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center group" aria-label="Nordic Code Works">
             <div ref={logoRef} className="relative overflow-hidden font-mono tracking-tighter flex">
               <span className="text-2xl font-bold">
-                <span style={{ color: '#3BB4C5' }}>nordic</span>
-                <span style={{ color: '#F1B418' }}>(</span>
-                <span style={{ color: '#8655CA' }}>(</span>
-                <span style={{ color: '#2D7ACA' }}>code</span>
-                <span style={{ color: '#8655CA' }}>)</span>
-                <span style={{ color: '#2D7ACA' }}> works</span>
-                <span style={{ color: '#8655CA' }}>)</span>
+                <span className="text-accent-primary">nordic</span>
+                <span className="text-accent-secondary">(</span>
+                <span className="text-accent-tertiary">(</span>
+                <span className="text-accent-primary">code</span>
+                <span className="text-accent-tertiary">)</span>
+                <span className="text-accent-primary"> works</span>
+                <span className="text-accent-tertiary">)</span>
               </span>
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 anchor-nav" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
             {navigationItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="anchor text-sm font-medium transition-colors duration-300 hover:text-white text-gray-300"
+                className="text-sm font-medium transition-colors duration-300 hover:text-white text-gray-300"
               >
                 {item.label}
               </a>
@@ -193,28 +225,26 @@ const Header: FC<HeaderProps> = ({ className }) => {
           className="md:hidden fixed inset-x-0 top-20"
         >
           <nav
-            className="mx-4 rounded-xl bg-black/80 backdrop-blur-md shadow-lg border border-white/10 anchor-nav"
+            className="mx-4 rounded-xl bg-black/80 backdrop-blur-md shadow-lg border border-white/10 flex flex-col p-4 space-y-4"
             aria-label="Mobile navigation"
           >
-            <div className="px-4 py-6 space-y-4">
-              {navigationItems.map((item, index) => (
-                <div
-                  key={item.href}
-                  ref={(el) => (menuItemsRef.current[index] = el)}
+            {navigationItems.map((item, index) => (
+              <div
+                key={item.href}
+                ref={(el) => (menuItemsRef.current[index] = el)}
+              >
+                <a
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block py-2 text-base font-medium transition-colors duration-300 hover:text-white text-gray-300"
                 >
-                  <a
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="anchor block py-2 text-base font-medium transition-colors duration-300 hover:text-white text-gray-300"
-                  >
-                    {item.label}
-                  </a>
-                </div>
-              ))}
-              <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                <ThemeToggle position="header" />
-                <SocialLinks />
+                  {item.label}
+                </a>
               </div>
+            ))}
+            <div className="flex items-center justify-between pt-4 border-t border-white/10">
+              <ThemeToggle position="header" />
+              <SocialLinks />
             </div>
           </nav>
         </div>

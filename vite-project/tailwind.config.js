@@ -1,3 +1,4 @@
+// tailwind.config.js
 import type { Config } from 'tailwindcss';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
@@ -7,7 +8,7 @@ const config: Config = {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
   ],
-  
+  darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
       zIndex: {
@@ -20,7 +21,7 @@ const config: Config = {
         surface: {
           dark: '#6a6969',
           darker: '#131B2E',
-          lighter: '#223051',
+          lighter: '#f1f1f1', // Light theme surface color
         },
         mono: {
           50: '#FFFFFF',
@@ -68,34 +69,7 @@ const config: Config = {
         'gradient-primary': 'linear-gradient(135deg, #E94823 0%, #F05E3F 100%)',
         'gradient-accent': 'linear-gradient(135deg, #A3EA71 0%, #B4FF82 100%)',
       },
-      animation: {
-        grain: 'grain 8s steps(10) infinite',
-        float: 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        scroll: 'scroll 2s cubic-bezier(0.45, 0, 0.55, 1) infinite',
-      },
-      keyframes: {
-        grain: {
-          '0%, 100%': { transform: 'translate(0, 0)' },
-          '10%': { transform: 'translate(-5%, -5%)' },
-          '20%': { transform: 'translate(-10%, 5%)' },
-          '30%': { transform: 'translate(5%, -10%)' },
-          '40%': { transform: 'translate(-5%, 15%)' },
-          '50%': { transform: 'translate(-10%, 5%)' },
-          '60%': { transform: 'translate(15%, 0)' },
-          '70%': { transform: 'translate(0, 10%)' },
-          '80%': { transform: 'translate(-15%, 0)' },
-          '90%': { transform: 'translate(10%, 5%)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        scroll: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(200%)' },
-        },
-      },
+    
     },
   },
   plugins: [forms, typography],

@@ -1,62 +1,92 @@
 // App.tsx
-import { FC } from 'react';
+import { FC, lazy, Suspense } from 'react';
 import { useGSAPSetup } from './hooks/gsap-init';
-import LandingPage from './pages/LandingPage';
-import HomePage from './pages/HomePage';
-import PortfolioPage from './pages/PortfolioPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
+
+const LandingPage = lazy(() => import('./pages/LandingPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+
+const Header = lazy(() => import('./components/layout/Header'));
+const Footer = lazy(() => import('./components/layout/Footer'));
 
 const App: FC = () => {
   useGSAPSetup();
 
   return (
-    <div id="page" className="relative min-h-screen">
-      <Header />
+    <div id="page" className="site">
+      <header id="masthead" className="site-header fixed top-0 left-0 w-full z-50 opacity-0 transition-opacity duration-300">
+        <nav className="anchor-nav p-4 bg-black/80 backdrop-blur-sm flex flex-wrap gap-2 md:gap-4">
+    <Header />
+        </nav>
+      </header>
 
-      <div className="relative z-0">
-        <main id="content" className="site-content" role="main">
-          <section id="intro" className="full-screen">
-            <LandingPage />
-          </section>
+      <main id="content" className="site-content" role="main">
+        {/* Landing Section */}
+        <section id="intro" className="full-screen">
+          <LandingPage />
+        </section>
 
-          <section id="home" className="full-screen">
-            <HomePage />
-          </section>
+        {/* Home Section */}
+        <section id="home" className="full-screen">
+          <HomePage />
+        </section>
 
-          <section id="panels">
-            <div id="panels-container" style={{ width: '500%' }}>
-              <article id="panel-1" className="panel full-screen gradient-green">
+        {/* Horizontal Panels Section */}
+        <section id="panels">
+          <div id="panels-container" style={{ width: '500%' }}>
+            {/* Portfolio Panels */}
+            <article id="panel-1" className="panel full-screen gradient-green">
+              <div className="portfolio-section">
                 <PortfolioPage />
-              </article>
-              <article id="panel-2" className="panel full-screen gradient-blue">
-                <PortfolioPage pageNumber={2} />
-              </article>
-              <article id="panel-3" className="panel full-screen gradient-green">
+              </div>
+            </article>
+            
+            <article id="panel-2" className="panel full-screen gradient-blue">
+              <div className="portfolio-section">
+                <div className="container mx-auto px-4 h-full flex items-center">
+                  <h2 className="text-4xl font-bold">Project 2</h2>
+                </div>
+              </div>
+            </article>
+
+            {/* About Panels */}
+            <article id="panel-3" className="panel full-screen gradient-green">
+              <div className="about-section">
                 <AboutPage />
-              </article>
-              <article id="panel-4" className="panel full-screen gradient-blue">
-                <AboutPage pageNumber={2} />
-              </article>
-              <article id="panel-5" className="panel full-screen gradient-green">
-                <AboutPage pageNumber={3} />
-              </article>
-            </div>
-          </section>
+              </div>
+            </article>
 
-          <section id="contact" className="full-screen">
-            <ContactPage />
-          </section>
-        </main>
+            <article id="panel-4" className="panel full-screen gradient-blue">
+              <div className="about-section">
+                <div className="container mx-auto px-4 h-full flex items-center">
+                  <h2 className="text-4xl font-bold">More About</h2>
+                </div>
+              </div>
+            </article>
 
-        <footer className="relative z-10 w-full bg-black text-white">
-          <div className="container mx-auto">
-            <Footer />
+            <article id="panel-5" className="panel full-screen gradient-green">
+              <div className="about-section">
+                <div className="container mx-auto px-4 h-full flex items-center">
+                  <h2 className="text-4xl font-bold">Experience</h2>
+                </div>
+              </div>
+            </article>
           </div>
-        </footer>
-      </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="full-screen">
+          <ContactPage />
+        </section>
+      </main>
+
+      <footer id="footer" className="w-full bg-black text-white p-8">
+        <div className="container mx-auto">
+          <Footer />
+        </div>
+      </footer>
     </div>
   );
 };
