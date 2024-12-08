@@ -2,6 +2,7 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { Mail, Github, Linkedin, ArrowRight } from 'lucide-react';
+import './ContactPage.css'; // Import the CSS file
 
 const ContactPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,42 +36,42 @@ const ContactPage = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="min-h-[200vh] bg-surface-darker text-mono-50 pt-20">
+    <div ref={containerRef} className="contact-page">
       {/* Background and Overlays */}
-      <div className="fixed inset-0 bg-gradient-dark from-surface-darker via-tekhelet-dark to-tekhelet-base opacity-30 z-0" />
-      <div className="fixed inset-0 bg-noise opacity-5 z-[1]" />
+      <div className="background-overlay" />
+      <div className="background-noise" />
       
-      <div className="relative z-10 max-w-5xl mx-auto px-4">
+      <div className="content-container">
         {/* Title Section */}
-        <div className="text-center mb-16 pt-20">
-          <h1 className="text-[10vw] md:text-[8vw] font-mono leading-none mb-8 tracking-tighter">
-            <div className="block overflow-hidden">
-              <div className="flex justify-center">
+        <div className="title-section">
+          <h1 className="title">
+            <div className="title-block">
+              <div className="title-flex">
                 {"nordic".split("").map((letter, index) => (
-                  <span key={index} className="letter inline-block">{letter}</span>
+                  <span key={index} className="letter">{letter}</span>
                 ))}
               </div>
             </div>
-            <div className="block opacity-90 overflow-hidden">
-              <div className="flex justify-center">
+            <div className="title-block opacity-90">
+              <div className="title-flex">
                 {"((connect))".split("").map((letter, index) => (
-                  <span key={index} className="letter inline-block text-accent-primary">{letter}</span>
+                  <span key={index} className="letter text-accent-primary">{letter}</span>
                 ))}
               </div>
             </div>
           </h1>
-          <p className="text-2xl md:text-3xl text-mono-300 max-w-3xl mx-auto font-light">
+          <p className="subtitle">
             Ready to bring your vision to life?
           </p>
         </div>
 
         {/* Contact Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-32">
+        <div className="contact-grid">
           {/* Contact Info */}
-          <div className="contact-sidebar space-y-12">
-            <div className="backdrop-blur-md p-8 rounded-2xl border border-mono-800/50 bg-surface-darker/50">
-              <h3 className="text-2xl font-bold mb-6">Connect With Us</h3>
-              <div className="space-y-6">
+          <div className="contact-sidebar">
+            <div className="contact-card">
+              <h3 className="contact-card-title">Connect With Us</h3>
+              <div className="contact-links">
                 {[
                   { icon: Mail, text: 'contact@nordiccodeworks.com', href: 'mailto:contact@nordiccodeworks.com' },
                   { icon: Github, text: 'GitHub', href: 'https://github.com/nordiccodeworks' },
@@ -81,18 +82,18 @@ const ContactPage = () => {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 text-mono-300 hover:text-mono-50 transition-colors p-4 rounded-lg hover:bg-white/5"
+                    className="contact-link"
                   >
-                    <item.icon className="w-6 h-6" />
+                    <item.icon className="contact-icon" />
                     <span>{item.text}</span>
                   </a>
                 ))}
               </div>
             </div>
 
-            <div className="backdrop-blur-md p-8 rounded-2xl border border-mono-800/50 bg-surface-darker/50">
-              <h3 className="text-2xl font-bold mb-4">Office Hours</h3>
-              <p className="text-mono-300">
+            <div className="contact-card">
+              <h3 className="contact-card-title">Office Hours</h3>
+              <p className="contact-hours">
                 Monday - Friday<br />
                 9:00 AM - 5:00 PM CET
               </p>
@@ -100,28 +101,28 @@ const ContactPage = () => {
           </div>
 
           {/* Quick Contact Form */}
-          <div className="contact-form backdrop-blur-md p-8 rounded-2xl border border-mono-800/50 bg-surface-darker/50">
-            <h3 className="text-2xl font-bold mb-6">Quick Message</h3>
-            <div className="space-y-6">
+          <div className="contact-form">
+            <h3 className="contact-form-title">Quick Message</h3>
+            <div className="contact-form-fields">
               <input
                 type="text"
                 placeholder="Your Name"
-                className="w-full bg-surface-darker/30 border border-mono-800/50 rounded-xl px-6 py-4 text-mono-50 placeholder:text-mono-400 focus:outline-none focus:border-mono-700"
+                className="contact-input"
               />
               <input
                 type="email"
                 placeholder="Your Email"
-                className="w-full bg-surface-darker/30 border border-mono-800/50 rounded-xl px-6 py-4 text-mono-50 placeholder:text-mono-400 focus:outline-none focus:border-mono-700"
+                className="contact-input"
               />
               <textarea
                 placeholder="Your Message"
                 rows={4}
-                className="w-full bg-surface-darker/30 border border-mono-800/50 rounded-xl px-6 py-4 text-mono-50 placeholder:text-mono-400 focus:outline-none focus:border-mono-700"
+                className="contact-textarea"
               />
-              <button className="w-full group relative overflow-hidden rounded-xl bg-accent-primary px-8 py-4 text-surface-darker font-medium">
-                <span className="relative z-10 flex items-center justify-center gap-2">
+              <button className="contact-button">
+                <span className="contact-button-content">
                   Send Message
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="contact-button-icon" />
                 </span>
               </button>
             </div>
@@ -129,8 +130,8 @@ const ContactPage = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="text-center pb-20">
-          <p className="text-mono-400">Scroll to footer</p>
+        <div className="scroll-indicator">
+          <p className="scroll-text">Scroll to footer</p>
         </div>
       </div>
     </div>

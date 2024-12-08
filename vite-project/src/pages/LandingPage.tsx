@@ -73,40 +73,40 @@ const LandingPage: FC = () => {
     return () => tl.kill();
   }, []);
 
-   return (
-    <div className="min-h-[150vh] flex flex-col items-center justify-center">
+  return (
+    <div className="landing-page-container">
       <div 
         id="landing-page" 
         ref={containerRef} 
-        className="bg-gradient-tekhelet dark:bg-gradient-dark text-mono-50 overflow-hidden min-h-screen relative flex flex-col items-center justify-center w-full"
+        className="landing-page"
       >
         {/* Background Noise & Overlay */}
-        <div className="absolute inset-0 bg-noise opacity-5" />
-        <div className="absolute inset-0 bg-gradient-dark from-surface-darker via-tekhelet-dark to-tekhelet-base dark:from-mono-950 dark:via-surface-darker dark:to-tekhelet-dark opacity-30 z-0" />
+        <div className="background-noise" />
+        <div className="background-overlay" />
         
         {/* Time Display and Theme Toggle */}
-        <div className="absolute top-8 left-0 right-0 flex justify-between px-6">
+        <div className="time-theme-container">
           {/* Year Display */}
-          <div className="flex items-center gap-2 text-xs">
-            <div className="w-8 h-[1px] bg-mono-50 opacity-20" />
+          <div className="year-display">
+            <div className="year-line" />
             <span>2024</span>
           </div>
 
           {/* Theme Toggle and Time Display */}
-          <div className="flex items-center gap-8">
+          <div className="theme-time-container">
             <ThemeToggle position="landing" />
-            <div className="hidden sm:flex items-center gap-6 text-xs">
+            <div className="time-display">
               {[
                 { city: 'STOCKHOLM', timeZone: 'stockholm' },
                 { city: 'NEW YORK', timeZone: 'newYork' },
                 { city: 'LONDON', timeZone: 'london' },
                 { city: 'TOKYO', timeZone: 'tokyo' },
               ].map((location) => (
-                <div key={location.city} className="flex items-center gap-2">
-                  <Clock size={12} className="text-mono-300 dark:text-mono-400" />
-                  <span className="text-mono-300 dark:text-mono-400 font-medium">{location.city}</span>
-                  <span className="text-mono-50 font-mono font-medium">{formatTime(times[location.timeZone])}</span>
-                  <div className="w-8 h-[1px] bg-mono-300 dark:bg-mono-400 opacity-30" />
+                <div key={location.city} className="time-item">
+                  <Clock size={12} className="clock-icon" />
+                  <span className="city-name">{location.city}</span>
+                  <span className="time">{formatTime(times[location.timeZone])}</span>
+                  <div className="time-line" />
                 </div>
               ))}
             </div>
@@ -114,90 +114,74 @@ const LandingPage: FC = () => {
         </div>
 
         {/* Main Content */}
-        <div ref={textRef} className="text-center w-full max-w-[90vw] mx-auto mb-8">
-          <h1 className="text-[10vw] sm:text-[9vw] md:text-[8vw] lg:text-[7vw] font-mono leading-none tracking-tighter mb-4">
-            <div className="block text-mono-50 dark:text-mono-100 overflow-hidden">
-              <div className="flex justify-center">
+        <div ref={textRef} className="main-content">
+          <h1 className="main-title">
+            <div className="title-nordic">
+              <div className="title-nordic-inner">
                 {nordicText.map((letter, index) => (
-                  <span key={index} className="letter inline-block">{letter}</span>
+                  <span key={index} className="letter">{letter}</span>
                 ))}
               </div>
             </div>
-            <div className="block text-accent-primary dark:text-accent-secondary opacity-90 overflow-hidden">
-              <div className="flex justify-center">
+            <div className="title-code">
+              <div className="title-code-inner">
                 {codeText.map((letter, index) => (
-                  <span key={index} className="letter inline-block">{letter}</span>
+                  <span key={index} className="letter">{letter}</span>
                 ))}
               </div>
             </div>
           </h1>
 
-          <div className="overflow-hidden">
-            <p className="tagline text-base sm:text-xl md:text-2xl text-mono-200 dark:text-mono-300 max-w-3xl mx-auto font-light">
+          <div className="tagline-container">
+            <p className="tagline">
               Crafting digital solutions with Nordic precision
             </p>
           </div>
         </div>
 
-        {/* Add this after the tagline div and before the Side Links */}
-{/* Tech Stack */}
-<div className="flex flex-wrap justify-center gap-2 px-4 mb-8 landscape:mb-4 landscape:gap-1.5">
-{['React', 'Node.js', 'TypeScript', 'Python', 'Django'].map((tech) => (
-  <span
-    key={tech}
-    className="tech-item text-xs px-3 py-1 rounded-full 
-      border border-mono-300/20 dark:border-mono-400/20 
-      text-mono-300 dark:text-mono-400 
-      hover:border-mono-300/40 dark:hover:border-mono-400/40 
-      hover:text-mono-200 dark:hover:text-mono-300
-      transition-colors landscape:text-xs landscape:px-2 landscape:py-0.5
-      bg-surface-darker/10 dark:bg-surface-darker/20"
-  >
-    {tech}
-  </span>
-))}
-</div>
+        {/* Tech Stack */}
+        <div className="tech-stack">
+          {['React', 'Node.js', 'TypeScript', 'Python', 'Django'].map((tech) => (
+            <span key={tech} className="tech-item">
+              {tech}
+            </span>
+          ))}
+        </div>
 
         {/* Side Links */}
-        <div
-          ref={sideLinksRef}
-          className="absolute bottom-12 left-4 flex flex-col gap-6 text-xs"
-        >
+        <div ref={sideLinksRef} className="side-links">
           <a
             href="https://github.com/nordiccodeworks"
-            className="text-mono-300 hover:text-mono-50 dark:text-mono-400 dark:hover:text-mono-100 transition-colors flex flex-row items-end"
+            className="side-link"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="transform rotate-90 origin-bottom-left mb-1">GITHUB</span>
-            <Github size={18} className="ml-1" />
+            <span className="side-link-text">GITHUB</span>
+            <Github size={18} className="side-link-icon" />
           </a>
           <a
             href="https://linkedin.com/company/nordiccodeworks"
-            className="text-mono-300 hover:text-mono-50 dark:text-mono-400 dark:hover:text-mono-100 transition-colors flex flex-row items-end"
+            className="side-link"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="transform rotate-90 origin-bottom-left mb-1">LINKEDIN</span>
-            <Linkedin size={18} className="ml-1" />
+            <span className="side-link-text">LINKEDIN</span>
+            <Linkedin size={18} className="side-link-icon" />
           </a>
         </div>
 
         {/* Scroll Indicator */}
-        <div
-          ref={scrollIndicatorRef}
-          className="scroll-indicator absolute bottom-6 w-full left-0 right-0 flex flex-col items-center gap-2"
-        >
-          <ArrowDown className="animate-bounce text-mono-50 dark:text-mono-100 w-5 mx-auto" />
-          <span className="text-xs uppercase tracking-widest text-mono-300 dark:text-mono-400 font-medium text-center w-full">
+        <div ref={scrollIndicatorRef} className="scroll-indicator">
+          <ArrowDown className="scroll-arrow" />
+          <span className="scroll-text">
             Scroll Down
           </span>
         </div>
       </div>
 
       {/* Extra space for scroll functionality */}
-      <div className="h-[50vh] bg-gradient-dark from-tekhelet-base to-surface-darker dark:from-mono-950 dark:to-surface-darker flex items-center justify-center">
-        <p className="text-xl text-mono-300 dark:text-mono-400">Continue scrolling to explore...</p>
+      <div className="extra-scroll-space">
+        <p className="extra-scroll-text">Continue scrolling to explore...</p>
       </div>
     </div>
   );

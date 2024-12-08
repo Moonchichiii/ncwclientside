@@ -41,20 +41,20 @@ const PortfolioPage = () => {
     <div ref={containerRef} className="portfolio-container">
       <div ref={panelsRef} className="flex">
         <section className="portfolio-panel full-screen gradient-green">
-          <div className="container mx-auto px-4 h-full flex items-center justify-center">
-            <h1 className="text-6xl font-bold">Portfolio    it's here!!!!!!!!!!!!</h1>
+          <div className="container">
+            <h1 className="title">Portfolio</h1>
           </div>
         </section>
        
         <section className="portfolio-panel full-screen gradient-blue">
-          <div className="container mx-auto px-4 h-full flex items-center justify-center">
-            <h2 className="text-4xl font-bold">Project222222 1</h2>
+          <div className="container">
+            <h2 className="subtitle">Project 1</h2>
           </div>
         </section>
        
         <section className="portfolio-panel full-screen gradient-gray">
-          <div className="container mx-auto px-4 h-full flex items-center justify-center">
-            <h2 className="text-4xl font-bold">Project222222 2</h2>
+          <div className="container">
+            <h2 className="subtitle">Project 2</h2>
           </div>
         </section>
       </div>

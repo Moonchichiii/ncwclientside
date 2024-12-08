@@ -43,16 +43,10 @@ const HomePage: React.FC = () => {
   return (
     <div ref={containerRef} className="min-h-[200vh] bg-surface-darker text-mono-50 pt-20">
       {/* Gradient Background */}
-      <div className="fixed inset-0 bg-gradient-dark from-surface-darker via-tekhelet-dark to-tekhelet-base opacity-30 z-0" />
+      <div className="fixed inset-0 bg-gradient-dark opacity-30 z-0" />
       
       {/* Dot pattern overlay */}
-      <div
-        className="fixed inset-0 opacity-5 z-[1] pointer-events-none bg-noise"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-          backgroundSize: '32px 32px'
-        }}
-      />
+      <div className="fixed inset-0 opacity-5 z-[1] pointer-events-none bg-noise" />
 
       <div className="relative z-10">
         {/* Hero Section */}
@@ -97,9 +91,9 @@ const HomePage: React.FC = () => {
               ].map((service, index) => (
                 <div
                   key={index}
-                  className="service-card backdrop-blur-sm bg-surface-darker/50 border border-mono-800 rounded-lg p-8 hover:bg-surface-lighter/10 transition-all duration-300"
+                  className={`service-card backdrop-blur-sm bg-surface-darker/50 border border-mono-800 rounded-lg p-8 hover:bg-surface-lighter/10 transition-all duration-300 text-${service.color}`}
                 >
-                  <div className={`text-${service.color} mb-4`}>{service.icon}</div>
+                  <div className="mb-4">{service.icon}</div>
                   <h3 className="text-xl font-bold text-mono-50">{service.title}</h3>
                   <p className="mt-4 text-mono-300">
                     Tailored solutions meeting the highest standards of Nordic engineering excellence.

@@ -3,103 +3,48 @@
 @tailwind components;
 @tailwind utilities;
 
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  margin: 0;
-  height: 100%;
-  font-weight: 300;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-.full-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  overflow: hidden;
-}
-
-
-#masthead {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
+@layer base {
+  html,
+  body {
+    @apply m-0 min-h-full font-light overflow-x-hidden;
   }
-  
-
-#panels-container {
-  display: flex;
-  flex-direction: row;
-  width: 500%; /* Adjust based on number of panels */
 }
 
-.panel {
-  flex: none;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-  
+@layer components {
+  .full-screen {
+    @apply flex flex-col items-center justify-center min-h-screen w-full overflow-hidden;
+  }
+
+  .site-header {
+    @apply fixed top-0 left-0 right-0 z-header;
+  }
+
+  .site-content {
+    @apply relative z-base;
+  }
+
+  #panels-container {
+    @apply flex flex-row w-[500%];
+  }
+
+  .panel {
+    @apply flex-none w-screen h-screen overflow-hidden relative;
+  }
+
+  .portfolio-section,
+  .about-section {
+    @apply h-screen w-full relative;
+  }
+
+  #intro > div,
+  #home > div,
+  #contact > div {
+    @apply min-h-screen;
+  }
 }
 
-#page {
-  overflow-x: hidden;
-  min-height: 100vh;
-  background-color:purple;
-}
-
-/* Stacking context for main content */
-.site-content {
-  position: relative;
-  z-index: 0;
-}
-
-/* Ensure header stays on top */
-#masthead {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-}
-
-/* Keep panels behind header */
-#panels {
-  position: relative;
-  z-index: 0;
-}
-
-/* Section heights */
-#intro > div,
-#home > div,
-#contact > div {
-  min-height: 100vh;
-}
-
-/* Panel sections */
-.portfolio-section,
-.about-section {
-  height: 100vh;
-  width: 100%;
-  position: relative;
-}
-
-/* Footer stacking */
-#footer {
-  position: relative;
-  z-index: 100;
+@layer utilities {
+  .animate-link {
+    @apply transition-colors duration-200;
+  }
 }
